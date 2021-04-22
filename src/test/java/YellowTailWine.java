@@ -219,7 +219,7 @@ public class YellowTailWine {
         By searchResultSelector2 = By.cssSelector("div.address");
         List<WebElement> searchResults2 = driver.findElements(searchResultSelector2);
         for (WebElement item: searchResults2){
-            Assertions.assertTrue(item.getText().contains("Sydney NSW 2000"), "case 8, details of arch results are false");
+            Assertions.assertTrue(item.getText().contains("Sydney NSW 2000"), "case 8, details of search results are false");
         }
     }
 }
