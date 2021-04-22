@@ -9,17 +9,14 @@ import java.util.List;
 
 public class YellowTailWine {
     static WebDriver driver;
-
     // "welcome" page elements
     WebElement legalAgeCheck;
     WebElement dropDown;
     Select selectDropDown;
     WebElement welcomeButton;
-
     // "main" page elements
     WebElement mainPageWelcomeLabel;
     WebElement menuButton;
-
     // Menu elements
     WebElement menuYellowTail;
     WebElement menuWines;
@@ -29,11 +26,9 @@ public class YellowTailWine {
     WebElement menuFAQS;
     WebElement menuContact;
     WebElement menuLanguage;
-
     // "where to buy" page elements
     WebElement fieldLocation;
     WebElement searchButton;
-
     @BeforeEach
     public void before() {
         System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
