@@ -36,7 +36,7 @@ public class YellowTailWine {
 
         Assertions.assertEquals("I am of legal drinking age in", welcomePage.legalAgeCheckGetText(), "case 1, legalAgeLabel does not have expected text");
         Assertions.assertTrue(welcomePage.getLegalAgeCheck().isDisplayed(), "case 1, legalAgeCheck is not displayed");
-        Assertions.assertTrue(welcomePage.getDropDown().isDisplayed(), "case 1, selectDropDown is not displayed");
+        Assertions.assertTrue(welcomePage.getRegionDropBox().isDisplayed(), "case 1, selectDropBox is not displayed");
         Assertions.assertTrue(welcomePage.getWelcomeButton().isDisplayed(), "case 1, welcomeButton is not displayed");
         Assertions.assertFalse(welcomePage.getWelcomeButton().isEnabled(), "case 1, welcomeButton should be disabled but it is enabled");
     }
@@ -142,18 +142,6 @@ public class YellowTailWine {
     public void verifyNavigationToChinaMainPage() {
         WelcomePage welcomePage = new WelcomePage(driver);
         MainPage mainPage = welcomePage.navigateToMainPage();
-
-        //wait
-        mainPage.waitForElement(mainPage.getMenuButton());
-        mainPage.menuButtonClick();
-
-        //wait
-        mainPage.waitForElement(mainPage.getMenuLanguage());
-        mainPage.menuLanguageClick();
-
-        //wait
-        mainPage.waitForElement(mainPage.getChinaLanguage());
-        mainPage.menuChinaLanguageClick();
         ChineMainPage chineMainPage = mainPage.navigateToChineMainPage();
 
         //wait
@@ -173,23 +161,7 @@ public class YellowTailWine {
     public void verifyNavigationToWeiboChinaPage() {
         WelcomePage welcomePage = new WelcomePage(driver);
         MainPage mainPage = welcomePage.navigateToMainPage();
-
-        //wait
-        mainPage.waitForElement(mainPage.getMenuButton());
-        mainPage.menuButtonClick();
-
-        //wait
-        mainPage.waitForElement(mainPage.getMenuLanguage());
-        mainPage.menuLanguageClick();
-
-        //wait
-        mainPage.waitForElement(mainPage.getChinaLanguage());
-        mainPage.menuChinaLanguageClick();
         ChineMainPage chineMainPage = mainPage.navigateToChineMainPage();
-
-        //wait
-        chineMainPage.waitForElement(chineMainPage.getWeiboIcon());
-        chineMainPage.weiboIconClick();
         WeiboChinaPage weiboChinaPage = chineMainPage.navigateToWeiboChinaPage();
 
         //wait
@@ -206,14 +178,6 @@ public class YellowTailWine {
     public void verifyValidPostalCodeForWhereToBuyPage() {
         WelcomePage welcomePage = new WelcomePage(driver);
         MainPage mainPage = welcomePage.navigateToMainPage();
-
-        //wait
-        mainPage.waitForElement(mainPage.getMenuButton());
-        mainPage.menuButtonClick();
-
-        //wait
-        mainPage.waitForElement(mainPage.getMenuWhereToBuy());
-        mainPage.menuWhereToBuyClick();
         WhereToBuyPage whereToBuyPage = mainPage.navigateToWhereToBuyPage();
 
         //wait
@@ -243,25 +207,18 @@ public class YellowTailWine {
     public void verifyRedWineCocktailsList() {
         WelcomePage welcomePage = new WelcomePage(driver);
         MainPage mainPage = welcomePage.navigateToMainPage();
-
-        //wait
-        mainPage.waitForElement(mainPage.getMenuButton());
-        mainPage.menuButtonClick();
-
-        //wait
-        mainPage.waitForElement(mainPage.getMenuCocktails());
-        mainPage.menuCocktailsClick();
         CocktailsPage cocktailsPage = mainPage.navigateToCocktailsPage();
 
         //wait
-        cocktailsPage.waitForElement(cocktailsPage.getSelectCocktailsDropDown());
-        cocktailsPage.selectCocktailsDropDownClick();
+        cocktailsPage.waitForElement(cocktailsPage.getSelectCocktailsDropBox());
+        cocktailsPage.selectCocktailsDropBoxClick();
 
         //wait
         cocktailsPage.waitForElement(cocktailsPage.getRedWineCocktailItem());
         cocktailsPage.redWineCocktailItemClick();
 
-        Assertions.assertEquals(7, cocktailsPage.elementsCount(cocktailsPage.getSearchResults()), "case 9, count of results of red wines does not equal expected count");
+        int searchResult = 7;
+        Assertions.assertEquals(searchResult, cocktailsPage.elementsCount(cocktailsPage.getSearchResults()), "case 9, count of results of red wines does not equal expected count");
     }
 
     @Test
@@ -274,14 +231,6 @@ public class YellowTailWine {
     public void verifyCocktailsDetailsPage() {
         WelcomePage welcomePage = new WelcomePage(driver);
         MainPage mainPage = welcomePage.navigateToMainPage();
-
-        //wait
-        mainPage.waitForElement(mainPage.getMenuButton());
-        mainPage.menuButtonClick();
-
-        //wait
-        mainPage.waitForElement(mainPage.getMenuCocktails());
-        mainPage.menuCocktailsClick();
         CocktailsPage cocktailsPage = mainPage.navigateToCocktailsPage();
 
         //wait
@@ -307,19 +256,11 @@ public class YellowTailWine {
     public void verifySparklingWineCocktailsList() {
         WelcomePage welcomePage = new WelcomePage(driver);
         MainPage mainPage = welcomePage.navigateToMainPage();
-
-        //wait
-        mainPage.waitForElement(mainPage.getMenuButton());
-        mainPage.menuButtonClick();
-
-        //wait
-        mainPage.waitForElement(mainPage.getMenuCocktails());
-        mainPage.menuCocktailsClick() ;
         CocktailsPage cocktailsPage = mainPage.navigateToCocktailsPage();
 
         //wait
-        cocktailsPage.waitForElement(cocktailsPage.getSelectCocktailsDropDown());
-        cocktailsPage.selectCocktailsDropDownClick();
+        cocktailsPage.waitForElement(cocktailsPage.getSelectCocktailsDropBox());
+        cocktailsPage.selectCocktailsDropBoxClick();
 
         //wait
         cocktailsPage.waitForElement(cocktailsPage.getRedWineCocktailItem());
@@ -329,7 +270,8 @@ public class YellowTailWine {
         cocktailsPage.waitForElement(cocktailsPage.getSparklingWineCocktailItem());
         cocktailsPage.sparklingWineCocktailItemClick();
 
+        int searchResult = 18;
         Assertions.assertTrue(cocktailsPage.cocktailsTypeFieldGetText().contains("Multiple"), "case 11, CocktailsTypeField does not contains Multiple");
-        Assertions.assertEquals(18, cocktailsPage.elementsCount(cocktailsPage.getSearchResults()), "case 11, count of results for sparkling wines does not equal expected count");
+        Assertions.assertEquals(searchResult, cocktailsPage.elementsCount(cocktailsPage.getSearchResults()), "case 11, count of results for sparkling wines does not equal expected count");
     }
 }

@@ -26,12 +26,16 @@ public class ChineMainPage {
     }
 
     public WeiboChinaPage navigateToWeiboChinaPage() {
+        //wait
+        waitForElement(getWeiboIcon());
+        weiboIconClick();
         int winHandleNum = driver.getWindowHandles().size();
         if (winHandleNum > 1){
             for (String winHandle: driver.getWindowHandles()){
                 driver.switchTo().window(winHandle);
             }
         }
+
         return new WeiboChinaPage(driver);
     }
 

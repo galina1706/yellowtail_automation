@@ -15,7 +15,7 @@ public class WelcomePage {
     @FindBy(css = "[for=\"confirm\"]")
     private WebElement legalAgeCheck;
     @FindBy(css = "#agegate-selector-options")
-    private WebElement dropBox;
+    private WebElement regionDropBox;
     @FindBy(css = "[type=\"submit\"]")
     private WebElement welcomeButton;
     private Select selectElement;
@@ -33,12 +33,8 @@ public class WelcomePage {
 
     public void welcomeButtonClick(){ welcomeButton.click(); }
 
-    //public MainPage navigateToMainPage(){
-    //    return new MainPage(driver);
-    //}
-
-    public void selectValueCountryDropDown(String input){
-        selectElement = new Select(dropBox);
+    public void selectValueCountryDropBox(String input){
+        selectElement = new Select(regionDropBox);
         selectElement.selectByValue(input);
     }
 
@@ -49,8 +45,9 @@ public class WelcomePage {
         waitForElement(getLegalAgeCheck());
 
         legalAgeCheckClick();
-        selectValueCountryDropDown("eu");
+        selectValueCountryDropBox("eu");
         welcomeButtonClick();
+
         return new MainPage(driver);
     }
 
@@ -60,7 +57,7 @@ public class WelcomePage {
 
     public WebElement getLegalAgeCheck(){ return legalAgeCheck; }
 
-    public WebElement getDropDown() { return dropBox; }
+    public WebElement getRegionDropBox() { return regionDropBox; }
 
     public WebElement getWelcomeButton() {
         return welcomeButton;

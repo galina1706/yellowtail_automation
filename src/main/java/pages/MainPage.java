@@ -74,14 +74,42 @@ public class MainPage {
     public void menuCocktailsClick() { menuCocktails.click(); }
 
     public ChineMainPage navigateToChineMainPage(){
+        //wait
+        waitForElement(getMenuButton());
+        menuButtonClick();
+
+        //wait
+        waitForElement(getMenuLanguage());
+        menuLanguageClick();
+
+        //wait
+        waitForElement(getChinaLanguage());
+        menuChinaLanguageClick();
+
         return new ChineMainPage(driver);
     }
 
     public WhereToBuyPage navigateToWhereToBuyPage(){
+        //wait
+        waitForElement(getMenuButton());
+        menuButtonClick();
+
+        //wait
+        waitForElement(getMenuWhereToBuy());
+        menuWhereToBuyClick();
+
         return new WhereToBuyPage(driver);
     }
 
     public CocktailsPage navigateToCocktailsPage() {
+        //wait
+        waitForElement(getMenuButton());
+        menuButtonClick();
+
+        //wait
+        waitForElement(getMenuCocktails());
+        menuCocktailsClick();
+
         return new CocktailsPage(driver);
     }
 

@@ -20,7 +20,7 @@ public class CocktailsPage {
     }
 
     @FindBy(css = ".selected")
-    private WebElement selectCocktailsDropDown;
+    private WebElement selectCocktailsDropBox;
     @FindBy(css = "[data-value=\"red\"]")
     private WebElement redWineCocktailItem;
     @FindBy(css = "[data-value=\"bubbles\"]")
@@ -32,8 +32,8 @@ public class CocktailsPage {
     @FindBy(xpath = "//div[@class=\"tile recipe-tile\"]")
     private List<WebElement> searchResults;
 
-    public void selectCocktailsDropDownClick() {
-        selectCocktailsDropDown.click();
+    public void selectCocktailsDropBoxClick() {
+        selectCocktailsDropBox.click();
     }
 
     public void redWineCocktailItemClick() {
@@ -74,8 +74,8 @@ public class CocktailsPage {
         new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOf(element));
     }
 
-    public WebElement getSelectCocktailsDropDown() {
-        return selectCocktailsDropDown;
+    public WebElement getSelectCocktailsDropBox() {
+        return selectCocktailsDropBox;
     }
 
     public WebElement getRedWineCocktailItem() {
