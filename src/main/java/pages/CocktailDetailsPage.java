@@ -1,5 +1,5 @@
 package pages;
-import org.openqa.selenium.By;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -26,10 +26,6 @@ public class CocktailDetailsPage {
 
     public WebElement getIngredientSection() {
         return ingredientSection;
-    }
-
-    public void waitForElement(WebElement element){
-        new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOf(element));
     }
 
     public void waitGeneral(){

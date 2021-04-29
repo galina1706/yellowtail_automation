@@ -3,7 +3,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -22,11 +21,11 @@ public class ChineMainPage {
     @FindBy (css = ".sgg-comp-social-icon>.fa.fa-weibo")
     private WebElement weiboIcon;
 
-    public void elementClick(WebElement element) {
-        element.click();
+    public void weiboIconClick() {
+        weiboIcon.click();
     }
 
-    public WeiboChinaPage switchToWeiboChinaPage() {
+    public WeiboChinaPage navigateToWeiboChinaPage() {
         int winHandleNum = driver.getWindowHandles().size();
         if (winHandleNum > 1){
             for (String winHandle: driver.getWindowHandles()){
@@ -46,10 +45,6 @@ public class ChineMainPage {
 
     public String getPageUrl(){
         return driver.getCurrentUrl();
-    }
-
-    public WebElement getChinaMainPageWelcomeLabel() {
-        return chinaMainPageWelcomeLabel;
     }
 
     public WebElement getWeiboIcon() {

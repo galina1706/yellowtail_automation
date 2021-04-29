@@ -1,6 +1,5 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -33,15 +32,27 @@ public class CocktailsPage {
     @FindBy(xpath = "//div[@class=\"tile recipe-tile\"]")
     private List<WebElement> searchResults;
 
-    public void elementClick(WebElement element) {
-        element.click();
+    public void selectCocktailsDropDownClick() {
+        selectCocktailsDropDown.click();
+    }
+
+    public void redWineCocktailItemClick() {
+        redWineCocktailItem.click();
+    }
+
+    public void raspberryRoseWineClick() {
+        raspberryRoseWine.click();
+    }
+
+    public void sparklingWineCocktailItemClick() {
+        sparklingWineCocktailItem.click();
     }
 
     public int elementsCount(List<WebElement> elements) {
         return elements.size();
     }
 
-    public CocktailDetailsPage switchToCocktailDetailsPage(){
+    public CocktailDetailsPage navigateToCocktailDetailsPage(){
         int winHandleNum = driver.getWindowHandles().size();
         if (winHandleNum > 1){
             for (String winHandle: driver.getWindowHandles()){
@@ -51,8 +62,8 @@ public class CocktailsPage {
         return new CocktailDetailsPage(driver);
     }
 
-    public String elementGetText (WebElement element) {
-        return element.getText();
+    public String cocktailsTypeFieldGetText() {
+        return cocktailsTypeField.getText();
     }
 
     public void scrolling(WebElement element) {
@@ -61,10 +72,6 @@ public class CocktailsPage {
 
     public void waitForElement(WebElement element){
         new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOf(element));
-    }
-
-    public void waitGeneral(){
-        new WebDriverWait(driver, Duration.ofSeconds(3));
     }
 
     public WebElement getSelectCocktailsDropDown() {
@@ -77,10 +84,6 @@ public class CocktailsPage {
 
     public WebElement getSparklingWineCocktailItem() {
         return sparklingWineCocktailItem;
-    }
-
-    public WebElement getCocktailsTypeField() {
-        return cocktailsTypeField;
     }
 
     public WebElement getRaspberryRoseWine() {

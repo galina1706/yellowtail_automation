@@ -1,6 +1,5 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -45,39 +44,49 @@ public class MainPage {
     @FindBy(css=".country-select span")
     private WebElement menuLanguage;
     @FindBy(css="[data-key=\"CN\"]")
-    private WebElement chinaLanguage;
+    private WebElement menuChinaLanguage;
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    public String elementGetText(WebElement element){
-        return element.getText();
+    public String welcomeLabelGetText(){
+        return welcomeLabel.getText();
     }
 
-    public void elementClick(WebElement element){
-        element.click();
+    public void menuButtonClick(){
+        menuButton.click();
     }
 
-    public ChineMainPage switchToChineMainPage(){
+    public void menuYellowTailClick(){
+        menuYellowTail.click();
+    }
+
+    public void menuLanguageClick(){
+        menuLanguage.click();
+    }
+
+    public void menuChinaLanguageClick() { menuChinaLanguage.click(); }
+
+    public void menuWhereToBuyClick() { menuWhereToBuy.click(); }
+
+    public void menuCocktailsClick() { menuCocktails.click(); }
+
+    public ChineMainPage navigateToChineMainPage(){
         return new ChineMainPage(driver);
     }
 
-    public WhereToBuyPage switchToWhereToBuyPage(){
+    public WhereToBuyPage navigateToWhereToBuyPage(){
         return new WhereToBuyPage(driver);
     }
 
-    public CocktailsPage switchToCocktailsPage(){
+    public CocktailsPage navigateToCocktailsPage() {
         return new CocktailsPage(driver);
     }
 
     public void waitForElement(WebElement element){
         new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOf(element));
-    }
-
-    public void waitGeneral(){
-        new WebDriverWait(driver, Duration.ofSeconds(3));
     }
 
     public WebElement getWelcomeLabel() {
@@ -137,6 +146,6 @@ public class MainPage {
     }
 
     public WebElement getChinaLanguage() {
-        return chinaLanguage;
+        return menuChinaLanguage;
     }
 }

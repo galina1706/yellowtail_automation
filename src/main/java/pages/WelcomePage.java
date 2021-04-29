@@ -15,48 +15,54 @@ public class WelcomePage {
     @FindBy(css = "[for=\"confirm\"]")
     private WebElement legalAgeCheck;
     @FindBy(css = "#agegate-selector-options")
-    private WebElement dropDown;
+    private WebElement dropBox;
     @FindBy(css = "[type=\"submit\"]")
     private WebElement welcomeButton;
-    private Select selectCountryDropDown;
+    private Select selectElement;
 
     public WelcomePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    public String elementGetText(WebElement element){
-        return element.getText();
+    public String legalAgeCheckGetText(){
+        return legalAgeCheck.getText();
     }
 
-    public void elementClick(WebElement element){
-        element.click();
-    }
+    public void legalAgeCheckClick(){ legalAgeCheck.click(); }
 
-    public MainPage switchToMainPage(){
-        return new MainPage(driver);
-    }
+    public void welcomeButtonClick(){ welcomeButton.click(); }
 
-    public void selectValueCountryDropDown(Select selectElement, WebElement element, String input){
-        selectElement = new Select(element);
+    //public MainPage navigateToMainPage(){
+    //    return new MainPage(driver);
+    //}
+
+    public void selectValueCountryDropDown(String input){
+        selectElement = new Select(dropBox);
         selectElement.selectByValue(input);
+    }
+
+    public MainPage navigateToMainPage(){
+        getLegalAgeCheck();
+
+        //wait
+        waitForElement(getLegalAgeCheck());
+
+        legalAgeCheckClick();
+        selectValueCountryDropDown("eu");
+        welcomeButtonClick();
+        return new MainPage(driver);
     }
 
     public void waitForElement(WebElement element){
         new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOf(element));
     }
 
-    public void waitGeneral(){
-        new WebDriverWait(driver, Duration.ofSeconds(3));
-    }
-
     public WebElement getLegalAgeCheck(){ return legalAgeCheck; }
 
-    public WebElement getDropDown() { return dropDown; }
+    public WebElement getDropDown() { return dropBox; }
 
     public WebElement getWelcomeButton() {
         return welcomeButton;
     }
-
-    public Select getSelectCountryDropDown() { return selectCountryDropDown; }
 }

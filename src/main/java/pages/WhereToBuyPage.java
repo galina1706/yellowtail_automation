@@ -1,6 +1,5 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -26,15 +25,19 @@ public class WhereToBuyPage {
     @FindBy(css = "div.address")
     private List<WebElement> searchResults;
 
-    public void elementClick(WebElement element) {
-        element.click();
+    public void fieldLocationClick() {
+        fieldLocation.click();
+    }
+
+    public void searchButtonClick() {
+        searchButton.click();
     }
 
     public void elementSendKeys(WebElement element, String input) {
         element.sendKeys(input);
     }
 
-    public String elementGetText(WebElement element) {
+    public String searchResultsGetText(WebElement element){
         return element.getText();
     }
 
@@ -48,10 +51,6 @@ public class WhereToBuyPage {
 
     public WebElement getFieldLocation() {
         return fieldLocation;
-    }
-
-    public WebElement getSearchButton() {
-        return searchButton;
     }
 
     public List<WebElement> getSearchResults() {
