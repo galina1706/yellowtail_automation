@@ -4,7 +4,6 @@ Requirements:
 - selenium-chrome-driver: 4.0.0-beta-3
 - junit: 5.7.1
 
-
 Tests
 ----------------------------
     Case 1: Welcome page: all required elements are displayed
