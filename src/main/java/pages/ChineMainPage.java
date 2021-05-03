@@ -2,18 +2,17 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.Waiters;
 
 import java.time.Duration;
 
-public class ChineMainPage {
-    WebDriver driver;
+public class ChineMainPage extends AbstractPage{
 
-    public ChineMainPage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
+    public ChineMainPage() {
+        super();
+        waitForPageUrl();
     }
 
     @FindBy (css = ".heading-editable>font:first-child")
@@ -21,34 +20,35 @@ public class ChineMainPage {
     @FindBy (css = ".sgg-comp-social-icon>.fa.fa-weibo")
     private WebElement weiboIcon;
 
+    public void waitForPageUrl() {
+        new WebDriverWait(ProviderForDriver.getDriver(), Duration.ofSeconds(10)).until(ExpectedConditions.urlContains("yellowtailwine.cn"));
+    }
+
     public void weiboIconClick() {
         weiboIcon.click();
     }
 
     public WeiboChinaPage navigateToWeiboChinaPage() {
         //wait
-        waitForElement(getWeiboIcon());
+        waitForLoadableElement(getWeiboIcon());
         weiboIconClick();
-        int winHandleNum = driver.getWindowHandles().size();
+
+        int winHandleNum = ProviderForDriver.getDriver().getWindowHandles().size();
         if (winHandleNum > 1){
-            for (String winHandle: driver.getWindowHandles()){
-                driver.switchTo().window(winHandle);
+            for (String winHandle: ProviderForDriver.getDriver().getWindowHandles()){
+                ProviderForDriver.getDriver().switchTo().window(winHandle);
             }
         }
-
-        return new WeiboChinaPage(driver);
+        return new WeiboChinaPage();
     }
 
-    public void waitForElement(WebElement element){
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOf(element));
-    }
-
-    public void waitGeneral(){
-        new WebDriverWait(driver, Duration.ofSeconds(10));
+    @Override
+    public void waitForLoadableElement(WebElement webElement){
+        Waiters.waitForElementToBeVisible(webElement);
     }
 
     public String getPageUrl(){
-        return driver.getCurrentUrl();
+        return ProviderForDriver.getDriver().getCurrentUrl();
     }
 
     public WebElement getWeiboIcon() {

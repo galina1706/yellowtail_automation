@@ -6,16 +6,15 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.Waiters;
 
 import java.time.Duration;
 import java.util.List;
 
-public class WhereToBuyPage {
-    WebDriver driver;
-
-    public WhereToBuyPage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
+public class WhereToBuyPage extends AbstractPage{
+    public WhereToBuyPage() {
+        super();
+        waitForPageUrl();
     }
 
     @FindBy(css = "#locationName")
@@ -24,6 +23,10 @@ public class WhereToBuyPage {
     private WebElement searchButton;
     @FindBy(css = "div.address")
     private List<WebElement> searchResults;
+
+    public void waitForPageUrl() {
+        new WebDriverWait(ProviderForDriver.getDriver(), Duration.ofSeconds(2)).until(ExpectedConditions.urlContains("yellowtailwine.com/stores"));
+    }
 
     public void fieldLocationClick() {
         fieldLocation.click();
@@ -41,12 +44,9 @@ public class WhereToBuyPage {
         return element.getText();
     }
 
-    public void waitForElement(WebElement element){
-        new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOf(element));
-    }
-
-    public void waitGeneral(){
-        new WebDriverWait(driver, Duration.ofSeconds(3));
+    @Override
+    public void waitForLoadableElement(WebElement webElement){
+        Waiters.waitForElementToBeVisible(webElement);
     }
 
     public WebElement getFieldLocation() {

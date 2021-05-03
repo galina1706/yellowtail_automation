@@ -7,16 +7,15 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.Waiters;
 
 import java.time.Duration;
 import java.util.List;
 
-public class CocktailsPage {
-    WebDriver driver;
+public class CocktailsPage extends AbstractPage{
 
-    public CocktailsPage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
+    public CocktailsPage() {
+        super();
     }
 
     @FindBy(css = ".selected")
@@ -53,13 +52,14 @@ public class CocktailsPage {
     }
 
     public CocktailDetailsPage navigateToCocktailDetailsPage(){
-        int winHandleNum = driver.getWindowHandles().size();
+        int winHandleNum = ProviderForDriver.getDriver().getWindowHandles().size();
+
         if (winHandleNum > 1){
-            for (String winHandle: driver.getWindowHandles()){
-                driver.switchTo().window(winHandle);
+            for (String winHandle: ProviderForDriver.getDriver().getWindowHandles()){
+                ProviderForDriver.getDriver().switchTo().window(winHandle);
             }
         }
-        return new CocktailDetailsPage(driver);
+        return new CocktailDetailsPage();
     }
 
     public String cocktailsTypeFieldGetText() {
@@ -67,11 +67,7 @@ public class CocktailsPage {
     }
 
     public void scrolling(WebElement element) {
-        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView(true);", element);
-    }
-
-    public void waitForElement(WebElement element){
-        new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOf(element));
+        ((JavascriptExecutor)ProviderForDriver.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
     public WebElement getSelectCocktailsDropBox() {
@@ -92,5 +88,10 @@ public class CocktailsPage {
 
     public List<WebElement> getSearchResults() {
         return searchResults;
+    }
+
+    @Override
+    public void waitForLoadableElement(WebElement webElement){
+        Waiters.waitForElementToBeVisible(webElement);
     }
 }

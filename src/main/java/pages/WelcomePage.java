@@ -2,15 +2,10 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.Waiters;
 
-import java.time.Duration;
-
-public class WelcomePage {
-    WebDriver driver;
+public class WelcomePage extends AbstractPage{
 
     @FindBy(css = "[for=\"confirm\"]")
     private WebElement legalAgeCheck;
@@ -20,9 +15,8 @@ public class WelcomePage {
     private WebElement welcomeButton;
     private Select selectElement;
 
-    public WelcomePage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
+    public WelcomePage() {
+        super();
     }
 
     public String legalAgeCheckGetText(){
@@ -39,20 +33,17 @@ public class WelcomePage {
     }
 
     public MainPage navigateToMainPage(){
-        getLegalAgeCheck();
-
         //wait
-        waitForElement(getLegalAgeCheck());
-
+        waitForLoadableElement(getLegalAgeCheck());
         legalAgeCheckClick();
         selectValueCountryDropBox("eu");
         welcomeButtonClick();
-
-        return new MainPage(driver);
+        return new MainPage();
     }
 
-    public void waitForElement(WebElement element){
-        new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOf(element));
+    @Override
+    public void waitForLoadableElement(WebElement webElement){
+        Waiters.waitForElementToBeVisible(webElement);
     }
 
     public WebElement getLegalAgeCheck(){ return legalAgeCheck; }

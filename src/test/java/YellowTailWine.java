@@ -1,26 +1,8 @@
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
 import pages.*;
 
-import java.time.Duration;
-
-public class YellowTailWine {
-    static WebDriver driver;
-
-    @BeforeEach
-    public void before() {
-        System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
-        driver = new ChromeDriver();
-        driver.get("https://www.yellowtailwine.com/");
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
-    }
-
-    @AfterEach
-    public void after() {
-        driver.quit();
-    }
-
+public class YellowTailWine extends JunitRunner{
     @Test
     //Case 1: Welcome page: all required elements are displayed
     //1. Go to Welcome page: https://www.yellowtailwine.com
@@ -29,10 +11,10 @@ public class YellowTailWine {
     //4. Verify that dropdown with Select is displayed
     //5. Verify that “Welcome” button is displayed and is inactive
     public void verifyWelcomePageElementsDisplayed() {
-        WelcomePage welcomePage = new WelcomePage(driver);
+        WelcomePage welcomePage = new WelcomePage();
 
         //wait
-        welcomePage.waitForElement(welcomePage.getLegalAgeCheck());
+        welcomePage.waitForLoadableElement(welcomePage.getLegalAgeCheck());
 
         Assertions.assertEquals("I am of legal drinking age in", welcomePage.legalAgeCheckGetText(), "case 1, legalAgeLabel does not have expected text");
         Assertions.assertTrue(welcomePage.getLegalAgeCheck().isDisplayed(), "case 1, legalAgeCheck is not displayed");
@@ -48,11 +30,11 @@ public class YellowTailWine {
     //3. Press “Welcome” button
     //4. Main page should be displayed
     public void verifyMainPageDisplayed() {
-        WelcomePage welcomePage = new WelcomePage(driver);
+        WelcomePage welcomePage = new WelcomePage();
         MainPage mainPage = welcomePage.navigateToMainPage();
 
         //wait
-        mainPage.waitForElement(mainPage.getWelcomeLabel());
+        mainPage.waitForLoadableElement(mainPage.getWelcomeLabel());
 
         Assertions.assertTrue(mainPage.welcomeLabelGetText().contains("Welcome".toUpperCase()), "case 2, Welcome label on main page is not appears");
     }
@@ -67,11 +49,11 @@ public class YellowTailWine {
     //   - find your wine button
     //   - footer
     public void verifyMainPageElementsDisplayed() {
-        WelcomePage welcomePage = new WelcomePage(driver);
+        WelcomePage welcomePage = new WelcomePage();
         MainPage mainPage = welcomePage.navigateToMainPage();
 
         //wait
-        mainPage.waitForElement(mainPage.getWelcomeToWorldYellowTailLabel());
+        mainPage.waitForLoadableElement(mainPage.getWelcomeToWorldYellowTailLabel());
 
         Assertions.assertTrue(mainPage.getWelcomeToWorldYellowTailLabel().isDisplayed(), "case 3, WelcomeToWorldYellowTailLabel is not displayed");
         Assertions.assertTrue(mainPage.getEnjoyLabel().isDisplayed(), "case 3, EnjoyLabel is not displayed");
@@ -88,15 +70,15 @@ public class YellowTailWine {
     //4. Click on [yellow tail]
     //5. Verify that Menu button is visible
     public void verifyMenuButtonOpenLogic() {
-        WelcomePage welcomePage = new WelcomePage(driver);
+        WelcomePage welcomePage = new WelcomePage();
         MainPage mainPage = welcomePage.navigateToMainPage();
 
         //wait
-        mainPage.waitForElement(mainPage.getMenuButton());
+        mainPage.waitForLoadableElement(mainPage.getMenuButton());
         mainPage.menuButtonClick();
 
         //wait
-        mainPage.waitForElement(mainPage.getMenuYellowTail());
+        mainPage.waitForLoadableElement(mainPage.getMenuYellowTail());
 
         Assertions.assertTrue(mainPage.getMenuYellowTail().isDisplayed(), "case 4, menu item Yellow Tail issue");
         Assertions.assertTrue(mainPage.getMenuWines().getText().contains("Wines".toUpperCase()), "case 4, menu item Wines issue");
@@ -110,7 +92,7 @@ public class YellowTailWine {
         mainPage.menuYellowTailClick();
 
         //wait
-        mainPage.waitForElement(mainPage.getMenuButton());
+        mainPage.waitForLoadableElement(mainPage.getMenuButton());
 
         Assertions.assertTrue(mainPage.getMenuButton().isDisplayed(), "case 4, menu button issue");
     }
@@ -122,11 +104,11 @@ public class YellowTailWine {
     //3. Click on [yellow tail]
     //4. Verify that Menu button is visible
     public void verifyMenuButtonCloseLogic() {
-        WelcomePage welcomePage = new WelcomePage(driver);
+        WelcomePage welcomePage = new WelcomePage();
         MainPage mainPage = welcomePage.navigateToMainPage();
 
         //wait
-        mainPage.waitForElement(mainPage.getMenuButton());
+        mainPage.waitForLoadableElement(mainPage.getMenuButton());
         mainPage.menuButtonClick();
 
         Assertions.assertTrue(mainPage.getMenuButton().isDisplayed(), "case 5, menu button issue");
@@ -140,12 +122,9 @@ public class YellowTailWine {
     //4. Select China in popup and click on it
     //5. Verify that language is changed
     public void verifyNavigationToChinaMainPage() {
-        WelcomePage welcomePage = new WelcomePage(driver);
+        WelcomePage welcomePage = new WelcomePage();
         MainPage mainPage = welcomePage.navigateToMainPage();
         ChineMainPage chineMainPage = mainPage.navigateToChineMainPage();
-
-        //wait
-        chineMainPage.waitGeneral();
 
         Assertions.assertTrue(chineMainPage.getPageUrl().contains(".cn"), "case 6, page does not contain .cn");
     }
@@ -159,13 +138,12 @@ public class YellowTailWine {
     //5. Click on icon (in white square on screenshot)
     //6. Verify that “https://www.weibo.com/yellowtailChina” site is open in new tab
     public void verifyNavigationToWeiboChinaPage() {
-        WelcomePage welcomePage = new WelcomePage(driver);
+        WelcomePage welcomePage = new WelcomePage();
         MainPage mainPage = welcomePage.navigateToMainPage();
         ChineMainPage chineMainPage = mainPage.navigateToChineMainPage();
+
         WeiboChinaPage weiboChinaPage = chineMainPage.navigateToWeiboChinaPage();
 
-        //wait
-        weiboChinaPage.waitForPageTitle();
         Assertions.assertTrue(weiboChinaPage.getPageUrl().contains("weibo.com/yellowtailChina"), "case 7, https://www.weibo.com/yellowtailChina site is not open");
     }
 
@@ -176,18 +154,16 @@ public class YellowTailWine {
     //3. Click on Search button
     //4. Verify that the results of search are displayed
     public void verifyValidPostalCodeForWhereToBuyPage() {
-        WelcomePage welcomePage = new WelcomePage(driver);
+        WelcomePage welcomePage = new WelcomePage();
         MainPage mainPage = welcomePage.navigateToMainPage();
         WhereToBuyPage whereToBuyPage = mainPage.navigateToWhereToBuyPage();
 
         //wait
-        whereToBuyPage.waitForElement(whereToBuyPage.getFieldLocation());
+        whereToBuyPage.waitForLoadableElement(whereToBuyPage.getFieldLocation());
         whereToBuyPage.fieldLocationClick();
         whereToBuyPage.elementSendKeys(whereToBuyPage.getFieldLocation(), "Sydney NSW, Australia");
         whereToBuyPage.searchButtonClick();
 
-        //wait
-        whereToBuyPage.waitGeneral();
         String result1 = "SYDNEY NSW";
         String result2 = "Darlinghurst NSW";
         String result3 = "BARANGAROO NSW";
@@ -205,16 +181,16 @@ public class YellowTailWine {
     //2. Select “Red wine cocktails”
     //3. Verify that 7 recipes are displayed
     public void verifyRedWineCocktailsList() {
-        WelcomePage welcomePage = new WelcomePage(driver);
+        WelcomePage welcomePage = new WelcomePage();
         MainPage mainPage = welcomePage.navigateToMainPage();
         CocktailsPage cocktailsPage = mainPage.navigateToCocktailsPage();
 
         //wait
-        cocktailsPage.waitForElement(cocktailsPage.getSelectCocktailsDropBox());
+        cocktailsPage.waitForLoadableElement(cocktailsPage.getSelectCocktailsDropBox());
         cocktailsPage.selectCocktailsDropBoxClick();
 
         //wait
-        cocktailsPage.waitForElement(cocktailsPage.getRedWineCocktailItem());
+        cocktailsPage.waitForLoadableElement(cocktailsPage.getRedWineCocktailItem());
         cocktailsPage.redWineCocktailItemClick();
 
         int searchResult = 7;
@@ -229,18 +205,15 @@ public class YellowTailWine {
     //4. Verify that new page is displayed:
     //- ingredients section is displayed
     public void verifyCocktailsDetailsPage() {
-        WelcomePage welcomePage = new WelcomePage(driver);
+        WelcomePage welcomePage = new WelcomePage();
         MainPage mainPage = welcomePage.navigateToMainPage();
         CocktailsPage cocktailsPage = mainPage.navigateToCocktailsPage();
 
         //wait
-        cocktailsPage.waitForElement(cocktailsPage.getRaspberryRoseWine());
+        cocktailsPage.waitForLoadableElement(cocktailsPage.getRaspberryRoseWine());
         cocktailsPage.scrolling(cocktailsPage.getRaspberryRoseWine());
         cocktailsPage.raspberryRoseWineClick();
         CocktailDetailsPage cocktailDetailsPage = cocktailsPage.navigateToCocktailDetailsPage();
-
-        //wait
-        cocktailDetailsPage.waitGeneral();
 
         Assertions.assertEquals("https://www.yellowtailwine.com/recipe/raspberry-rose/", cocktailDetailsPage.getPageUrl(), "case 10, new page is not displayed");
         Assertions.assertTrue(cocktailDetailsPage.getIngredientSection().isDisplayed(), "case 10, ingredient section is not displayed");
@@ -254,20 +227,20 @@ public class YellowTailWine {
     //4. Verify that “Multiple” word is displayed in “Type” dropdown
     //5. Verify that 18 recipes are displayed
     public void verifySparklingWineCocktailsList() {
-        WelcomePage welcomePage = new WelcomePage(driver);
+        WelcomePage welcomePage = new WelcomePage();
         MainPage mainPage = welcomePage.navigateToMainPage();
         CocktailsPage cocktailsPage = mainPage.navigateToCocktailsPage();
 
         //wait
-        cocktailsPage.waitForElement(cocktailsPage.getSelectCocktailsDropBox());
+        cocktailsPage.waitForLoadableElement(cocktailsPage.getSelectCocktailsDropBox());
         cocktailsPage.selectCocktailsDropBoxClick();
 
         //wait
-        cocktailsPage.waitForElement(cocktailsPage.getRedWineCocktailItem());
+        cocktailsPage.waitForLoadableElement(cocktailsPage.getRedWineCocktailItem());
         cocktailsPage.redWineCocktailItemClick();
 
         //wait
-        cocktailsPage.waitForElement(cocktailsPage.getSparklingWineCocktailItem());
+        cocktailsPage.waitForLoadableElement(cocktailsPage.getSparklingWineCocktailItem());
         cocktailsPage.sparklingWineCocktailItemClick();
 
         int searchResult = 18;

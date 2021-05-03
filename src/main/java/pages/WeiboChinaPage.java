@@ -1,23 +1,31 @@
 package pages;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.Waiters;
 
 import java.time.Duration;
 
-public class WeiboChinaPage {
-    WebDriver driver;
+public class WeiboChinaPage extends AbstractPage{
 
-    public WeiboChinaPage(WebDriver driver) {
-        this.driver = driver;
+    public WeiboChinaPage() {
+        super();
+        waitForWeiboPageUrl();
     }
 
-    public void waitForPageTitle() {
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.titleIs("黄尾袋鼠葡萄酒China的微博_微博"));
+    public void waitForWeiboPageUrl() {
+        new WebDriverWait(ProviderForDriver.getDriver(), Duration.ofSeconds(20)).until(ExpectedConditions.urlContains("weibo.com/yellowtailChina"));
     }
 
     public String getPageUrl(){
-        return driver.getCurrentUrl();
+        return ProviderForDriver.getDriver().getCurrentUrl();
+    }
+
+    @Override
+    public void waitForLoadableElement(WebElement webElement){
+        Waiters.waitForElementToBeVisible(webElement);
     }
 }
